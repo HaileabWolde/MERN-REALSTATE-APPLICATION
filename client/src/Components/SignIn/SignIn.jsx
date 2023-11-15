@@ -52,15 +52,18 @@ const SignIn = ()=>{
               {loading ? <button className="bg-slate-700 text-white p-4 rounded-lg text-sm md:text-xl">LOADING ... </button> : <button onClick={handleloading} className="bg-slate-700 text-white p-4 rounded-lg text-sm md:text-xl">{signup ? 'SIGN UP' : 'SIGN IN'}</button>}
               
            </form>
-        
+           <div className="mt-4">
            {
             signup ? <button onClick={handleSignup}> <h1> <span>Have an account?</span> 
-            <span className="text-blue-500">Sign In</span></h1></button> : 
+            <span className="text-blue-500 ml-2">Sign In</span></h1></button> : 
             <button onClick={handleSignup}> <h1> 
                 <span>Doesn't have an account? </span>
-                <span className="text-blue-500">Sign Up</span>
+                <span className="text-blue-500 ml-2">Sign Up</span>
             </h1></button>
            }
+           </div>
+        
+          
         </div>
     )
 }
