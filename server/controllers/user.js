@@ -16,7 +16,7 @@ try{
     })
     const token = result.createJWT()
 
-    res.status(200).json({UserTwo, token})
+    res.status(200).json({result, token})
 }
 catch(error){
 next(error)
