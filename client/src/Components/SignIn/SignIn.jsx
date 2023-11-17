@@ -15,8 +15,10 @@ const SignIn = ()=>{
         setLoading((prev)=>!prev)
     }
     const handleChange = (e)=>{
-        setInfo({...info, [e.target.name]: e.target.value})
+        setInfo({...info, 
+            [e.target.name]: e.target.value})
     }
+    console.log(info)
     return (
         <div className="max-w-xl mx-auto my-12 text-center">
            <h1 className="font-semibold text-4xl m-">{signup ? 'Sign Up' : 'Sign In'}</h1>
@@ -29,7 +31,7 @@ const SignIn = ()=>{
                 name="Username"
                 value={info.Username}
                 onChange={handleChange}
-                className="p-5 rounded-lg shadow-sm text-sm md:text-lg"
+                className="p-5 rounded-lg  text-sm md:text-lg border"
           />
             }
                
