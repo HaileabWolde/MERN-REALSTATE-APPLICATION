@@ -16,10 +16,37 @@ const SignIn = ()=>{
         setInfo({...info, 
             [e.target.name]: e.target.value})
     }
-    const handleSubmit = (e)=>{
+    const handleSubmit = async (e)=>{
         e.preventDefault()
+        setLoading(true)
+
+        if(signup){
+            const res = await fetch('/api/users/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(info)
+            })
+        }
+        else{
+            const res = await fetch('/api/users/signIn', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(info)
+            })
+        }
     }
-   
+    const data = res.json()
+    if(data.success === false){
+        setError(data.message)
+        setLoading(false)
+        return;
+    }
+    setLoading(false)
+   console.log(data)
     return (
         <div className="max-w-xl mx-auto my-12 text-center">
            <h1 className="font-semibold text-4xl m-">{signup ? 'Sign Up' : 'Sign In'}</h1>
