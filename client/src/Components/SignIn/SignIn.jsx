@@ -2,6 +2,7 @@ import { useState } from "react"
 const SignIn = ()=>{
     const [signup, isSignUp] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
     const [info, setInfo] = useState({
         Username: '',
         email: '',
@@ -10,19 +11,19 @@ const SignIn = ()=>{
     const handleSignup = ()=>{
         isSignUp((prev)=>!prev)
     }
-    const handleloading = (e)=>{
-        e.preventDefault();
-        setLoading((prev)=>!prev)
-    }
+   
     const handleChange = (e)=>{
         setInfo({...info, 
             [e.target.name]: e.target.value})
     }
-    console.log(info)
+    const handleSubmit = (e)=>{
+        e.preventDefault()
+    }
+   
     return (
         <div className="max-w-xl mx-auto my-12 text-center">
            <h1 className="font-semibold text-4xl m-">{signup ? 'Sign Up' : 'Sign In'}</h1>
-           <form className="flex flex-col gap-5 mt-8">
+           <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-8">
             {
                 signup && 
                 <input
@@ -51,8 +52,7 @@ const SignIn = ()=>{
               onChange={handleChange}
               className="p-5 rounded-lg shadow-sm text-sm md:text-lg"
               /> 
-              {loading ? <button className="bg-slate-700 text-white p-4 rounded-lg text-sm md:text-xl">LOADING ... </button> : <button onClick={handleloading} className="bg-slate-700 text-white p-4 rounded-lg text-sm md:text-xl">{signup ? 'SIGN UP' : 'SIGN IN'}</button>}
-              
+              {loading ? <button className="bg-slate-700 text-white p-4 rounded-lg text-sm md:text-xl">LOADING ... </button> : <button  type="submit" className="bg-slate-700 text-white p-4 rounded-lg text-sm md:text-xl">{signup ? 'SIGN UP' : 'SIGN IN'}</button>}          
            </form>
            <div className="mt-4">
            {
