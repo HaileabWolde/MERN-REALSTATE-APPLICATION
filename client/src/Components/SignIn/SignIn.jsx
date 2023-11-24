@@ -16,30 +16,36 @@ const SignIn = ()=>{
         setInfo({...info, 
             [e.target.name]: e.target.value})
     }
-    const handleSubmit = async (e)=>{
-        e.preventDefault()
-        setLoading(true)
-
-        let endPoint = signup ? '/api/users/signup' : '/api/users/signIn'
-
-       const res = await fetch(endPoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(info)
-            })
-       const data = await res.json()
-            if(data.success === false){
-                setError(data.message)
-                setLoading(false)
-                return;
-            }
-       setLoading(false)
-       console.log(data)
-        
-    }
-  
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+      
+        let endpoint = signup ? 'http://localhost:5000/users/signup' : 'http://localhost:5000/users/signIn';
+      
+        try {
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(info)
+          });
+      
+          const data = await res.json();
+      
+          if (data.success === false) {
+            setError(data.message);
+          } else {
+            // Process the successful response data
+            console.log(data);
+          }
+        } catch (error) {
+          console.error(error);
+          // Handle any network or request errors
+        }
+      
+        setLoading(false);
+      };
     return (
         <div className="max-w-xl mx-auto my-12 text-center">
            <h1 className="font-semibold text-4xl m-">{signup ? 'Sign Up' : 'Sign In'}</h1>

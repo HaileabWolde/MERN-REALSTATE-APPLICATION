@@ -7,7 +7,7 @@ const {Username, email, password} = req.body
 try{
     const User = await UserSchema.findOne({email})
     if(User){
-        next(errorHandler(500, 'User Already Exits'))
+       return next(errorHandler(500, 'User Already Exits'))
     }
     const result = await UserSchema.create({
         Username,
@@ -16,10 +16,10 @@ try{
     })
     const token = result.createJWT()
 
-    res.status(200).json({result, token})
+    return res.status(200).json({result, token})
 }
 catch(error){
-next(error)
+ return next(error)
 }
 }
 
@@ -29,17 +29,17 @@ export const signin = async (req, res, next)=>{
     try{
         const user = await UserSchema.findOne({email})
         if(!user){
-            next(errorHandler(500, `User Doesn't Exist`))
+            return next(errorHandler(500, `User Doesn't Exist`))
         }
         const checkpassword = await user.isPasswordmatched(password)
         if(!checkpassword){
-            next(errorHandler(500, 'Wrong Credentials'))
+            return next(errorHandler(500, 'Wrong Credentials'))
         }
         const token = user.createJWT()
 
-        res.json({user, token})
+        return res.json({user, token})
     }
     catch(error){
-        next(error)
+        return next(error)
     }
 }
