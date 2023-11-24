@@ -90,9 +90,11 @@ const SignIn = ()=>{
             </h1></button>
            }
            </div>
-        
-          
+           {
+            error && <p className="text-red-500 mt-5">{error}</p>
+           }
         </div>
+
     )
 }
 export default SignIn
