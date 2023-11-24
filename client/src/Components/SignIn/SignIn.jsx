@@ -1,5 +1,7 @@
 import { useState } from "react"
+import {useNavigate} from 'react-router-dom'
 const SignIn = ()=>{
+    const navigate = useNavigate()
     const [signup, isSignUp] = useState(false)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
@@ -38,6 +40,7 @@ const SignIn = ()=>{
           } else {
             // Process the successful response data
             console.log(data);
+            navigate('/')
           }
         } catch (error) {
           console.error(error);
