@@ -1,15 +1,18 @@
 import { useState } from "react"
+import { useSelector, useDispatch } from 'react-redux'
 import {useNavigate} from 'react-router-dom'
+import { SignInFailure, SignInSuccess, SignInStart } from "../../redux/user/userSlice"
 const SignIn = ()=>{
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [signup, isSignUp] = useState(false)
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
     const [info, setInfo] = useState({
         Username: '',
         email: '',
         password: ''
     })
+    const {Error, Loading} = useSelector((state)=> state.user)
+
     const handleSignup = ()=>{
         isSignUp((prev)=>!prev)
     }
@@ -20,7 +23,7 @@ const SignIn = ()=>{
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
+      dispatch(SignInStart())
       
         let endpoint = signup ? 'http://localhost:5000/users/signup' : 'http://localhost:5000/users/signIn';
       
@@ -36,18 +39,16 @@ const SignIn = ()=>{
           const data = await res.json();
       
           if (data.success === false) {
-            setError(data.message);
+           dispatch(SignInFailure(data.message))
           } else {
             // Process the successful response data
-            console.log(data);
+           dispatch(SignInSuccess(data))
             navigate('/')
           }
         } catch (error) {
           console.error(error);
           // Handle any network or request errors
         }
-      
-        setLoading(false);
       };
     return (
         <div className="max-w-xl mx-auto my-12 text-center">
@@ -81,7 +82,7 @@ const SignIn = ()=>{
               onChange={handleChange}
               className="p-5 rounded-lg shadow-sm text-sm md:text-lg"
               /> 
-              {loading ? <button className="bg-slate-700 text-white p-4 rounded-lg text-sm md:text-xl">LOADING ... </button> : <button  type="submit" className="bg-slate-700 text-white p-4 rounded-lg text-sm md:text-xl">{signup ? 'SIGN UP' : 'SIGN IN'}</button>}          
+              {Loading ? <button className="bg-slate-700 text-white p-4 rounded-lg text-sm md:text-xl">LOADING ... </button> : <button  type="submit" className="bg-slate-700 text-white p-4 rounded-lg text-sm md:text-xl">{signup ? 'SIGN UP' : 'SIGN IN'}</button>}          
            </form>
            <div className="mt-4">
            {
@@ -94,7 +95,7 @@ const SignIn = ()=>{
            }
            </div>
            {
-            error && <p className="text-red-500 mt-5">{error}</p>
+            Error && <p className="text-red-500 mt-5">{Error}</p>
            }
         </div>
 
