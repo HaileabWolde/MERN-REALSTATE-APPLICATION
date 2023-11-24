@@ -36,8 +36,12 @@ export const signin = async (req, res, next)=>{
             return next(errorHandler(500, 'Wrong Credentials'))
         }
         const token = user.createJWT()
+        const {password: pass , ...rest} = user._doc
+       return  res
+        .cookie('access_token', token, { httpOnly: true })
+        .status(200)
+        .json(rest);
 
-        return res.json({user, token})
     }
     catch(error){
         return next(error)
