@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useSelector, useDispatch } from 'react-redux'
 import {useNavigate} from 'react-router-dom'
 import { SignInFailure, SignInSuccess, SignInStart } from "../../redux/user/userSlice"
+import OAuth from '../OAuth/OAuth'
 const SignIn = ()=>{
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -82,7 +83,8 @@ const SignIn = ()=>{
               onChange={handleChange}
               className="p-5 rounded-lg shadow-sm text-sm md:text-lg"
               /> 
-              {Loading ? <button className="bg-slate-700 text-white p-4 rounded-lg text-sm md:text-xl">LOADING ... </button> : <button  type="submit" className="bg-slate-700 text-white p-4 rounded-lg text-sm md:text-xl">{signup ? 'SIGN UP' : 'SIGN IN'}</button>}          
+              {Loading ? <button className="bg-slate-700 text-white p-4 rounded-lg text-sm md:text-xl">LOADING ... </button> : <button  type="submit" className="bg-slate-700 text-white p-4 rounded-lg text-sm md:text-xl hover:opacity-90">{signup ? 'SIGN UP' : 'SIGN IN'}</button>} 
+              <OAuth/>         
            </form>
            <div className="mt-4">
            {
@@ -94,6 +96,7 @@ const SignIn = ()=>{
             </h1></button>
            }
            </div>
+         
            {
             Error && <p className="text-red-500 mt-5">{Error}</p>
            }
