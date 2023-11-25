@@ -47,3 +47,35 @@ export const signin = async (req, res, next)=>{
         return next(error)
     }
 }
+export const google = async (req, res, next)=>{
+    const {Username, email, photoURL} = req.body
+    try{
+            const user = await UserSchema.findOne({email})
+            if(user){
+                const token = user.createJWT()
+                const {password: pass, ...rest} = user._doc
+              
+                return res.cookie('access_token', token, {httpOnly: true})
+                .status(200).json(rest)
+            }
+            else{
+                const username = Username.split(" ").join("")
+                const password = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8)
+                const User = await UserSchema.create({
+                    Username: username,
+                    email,
+                    password,
+                    avator: photoURL
+                })
+                const token = User.createJWT()
+                const {password: pass, ...rest} = User._doc
+                res.cookie('access_token', token, {httpOnly: true}).
+                status(200).
+                json(rest)
+            }
+
+    }
+    catch(error){
+        next(error)
+    }
+}
