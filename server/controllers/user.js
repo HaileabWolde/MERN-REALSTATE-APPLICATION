@@ -48,7 +48,7 @@ export const signin = async (req, res, next)=>{
     }
 }
 export const google = async (req, res, next)=>{
-    const {Username, email, photoURL} = req.body
+    const {name, email, photo} = req.body
     try{
             const user = await UserSchema.findOne({email})
             if(user){
@@ -59,13 +59,13 @@ export const google = async (req, res, next)=>{
                 .status(200).json(rest)
             }
             else{
-                const username = Username.split(" ").join("")
+                const username = name.split(" ").join("")
                 const password = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8)
                 const User = await UserSchema.create({
                     Username: username,
                     email,
                     password,
-                    avator: photoURL
+                    avator: photo
                 })
                 const token = User.createJWT()
                 const {password: pass, ...rest} = User._doc
