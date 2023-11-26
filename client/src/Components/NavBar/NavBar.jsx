@@ -31,7 +31,7 @@ const NavBar = ()=>{
                {
                 CurrentUser ? 
                 <Link to="/profile">
-                <img src={CurrentUser.avator} alt="currentusername"/>
+                <img src={CurrentUser.avator} className="rounded-full h-8 w-8 object-cover" alt="currentusername"/>
                 </Link> :  
                 <Link to="/signIn">
                     <li className="hover:underline">SignIn</li>
