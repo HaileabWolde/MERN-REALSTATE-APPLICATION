@@ -77,12 +77,20 @@ export const google = async (req, res, next)=>{
 export const updateuser = async (req, res, next)=>{
     const {Username:user, email:Email, password:pass, avatar} = req.body
     const {id} = req.params
-
+    let hashedPassword; 
     try{
         if(req.userId !== id){
             return next(errorHandler(500, "Please Only update your own account"))
         }
-        let hashedPassword; 
+       if(!Email || !user){
+        return next(errorHandler(500, "Please Provide the necessary credentials"))
+       }
+       const exisitingUser = await UserSchema.findOne({
+        $or: [{email: Email}, {Username: user}]
+       })
+       if(exisitingUser){
+        return next(errorHandler(500, "email or username already exists"))
+       }
         if(pass){
              hashedPassword = await bcrypt.hash(pass, 10)
         }

@@ -34,7 +34,7 @@ const initialState = {
       },
       UpdateInFailure: (state, action)=>{
         state.Error = action.payload
-        state.Loading = true
+        state.Loading = false
       }
     },
   })
