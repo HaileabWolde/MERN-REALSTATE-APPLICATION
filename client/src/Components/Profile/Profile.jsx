@@ -26,7 +26,7 @@ const Profile = ()=>{
     }
   useEffect(()=>{
     if(file){
-        handleFileUpload()
+        handleFileUpload(file)
     }
   }, [file])
 
