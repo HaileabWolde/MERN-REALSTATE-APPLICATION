@@ -15,8 +15,9 @@ try{
         password
     })
     const token = result.createJWT()
+    const {password:pass , ...rest} = result._doc
 
-    return res.status(200).json({result, token})
+    return res.status(200).json({rest, token})
 }
 catch(error){
  return next(error)
