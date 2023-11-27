@@ -1,6 +1,6 @@
 import UserSchema from '../model/usermodel.js'
-import { errorHandler } from '../util/error.js'
-
+import { errorHandler } from '../middlewares/error.js'
+import bcrypt from 'bcryptjs'
 export const signup = async (req, res, next)=>{
 const {Username, email, password} = req.body
 
@@ -74,6 +74,33 @@ export const google = async (req, res, next)=>{
                 json(rest)
             }
 
+    }
+    catch(error){
+        next(error)
+    }
+}
+export const updateuser = async (req, res, next)=>{
+    const {Username:user, email:Email, password:pass, avatar} = req.body
+    const {id} = req.params
+
+    try{
+        if(req.userId !== id){
+            return next(errorHandler(500, "Please Only update your own account"))
+        }
+        let hashedPassword; 
+        if(pass){
+             hashedPassword = await bcrypt.hash(pass, 10)
+        }
+        const updatedUser = await UserSchema.findByIdAndUpdate( id, {
+           $set:{
+                Username: user,
+                email: Email,
+                password: hashedPassword,
+                avator: avatar
+            }
+        }, {new: true})
+        const {password:key, ...rest} = updatedUser._doc
+        res.status(200).json(rest)
     }
     catch(error){
         next(error)
