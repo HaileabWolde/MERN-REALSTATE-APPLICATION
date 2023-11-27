@@ -73,6 +73,7 @@ const Profile = ()=>{
       const data = await result.json()
       if(data.success === false){
         dispatch(UpdateInFailure(data.message))
+        console.log(data.message)
       }
       else{
         dispatch(UpdateInSuccess(data))
