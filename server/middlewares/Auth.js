@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 export const Auth = (req, res, next)=>{
     const token = req.cookies.access_token
     if(!token){
-        return next(errorHandler(500, "Please Sign in"))
+        return next(errorHandler(500, "UnAuthorized"))
     }
     
     try{

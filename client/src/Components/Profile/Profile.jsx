@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react"
 import { useSelector } from "react-redux"
+import { UpdateInFailure, UpdateInStart, UpdateInSuccess } from "../../redux/user/userSlice";
+import { useDispatch } from "react-redux";
 import {
     getDownloadURL,
     getStorage,
@@ -9,7 +11,9 @@ import {
 import { app } from "../../FireBase/firebase"
 const Profile = ()=>{
     const fileRef = useRef(null)
-    const { CurrentUser} =useSelector((state)=> state.user)
+    const dispatch = useDispatch()
+    const { CurrentUser, Error, Loading} =useSelector((state)=> state.user)
+    const [updateSuccess, setUpdateSuccess] = useState(false)
     const [file, setFile] = useState(undefined);
     const [filePerc, setFilePerc] = useState(0);
     const [fileUploadError, setFileUploadError] = useState(false);
@@ -53,10 +57,35 @@ const Profile = ()=>{
       }
     );
   };
+  const handleSubmit = async (e)=>{
+    e.preventDefault()
+    let endpoint = `http://localhost:5000/users/update/${CurrentUser._id}`
+    try{
+      dispatch(UpdateInStart())
+      const result = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formdata)
+      } )
+      const data = await result.json()
+      if(data.success === false){
+        dispatch(UpdateInFailure(data.message))
+      }
+      else{
+        dispatch(UpdateInSuccess(data))
+        setUpdateSuccess(true)
+      }
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
 return (
     <div className="max-w-lg mx-auto mt-14">
         <h1 className="font-semibold text-4xl text-center">Profile</h1>
-        <form className="flex flex-col gap-4">
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <input onChange={(e)=>setFile(e.target.files[0])} 
         hidden 
         type="file" 
@@ -95,13 +124,20 @@ return (
         name="password" 
         className="p-4 border rounded-lg text-lg"
         defaultValue={CurrentUser.password}/>
-        <button type="submit" className="text-white bg-slate-700 p-4 rounded-lg text-xl hover:opacity-90">UPDATE</button>
+        <button type="submit" className="text-white bg-slate-700 p-4 rounded-lg text-xl hover:opacity-90">{Loading ? 'Loading...' : 'UPDATE'}</button>
         </form>
         <div className="flex justify-between mt-5">
             <span className="text-red-700 text-lg">Delete Account</span>
             <span className="text-red-700 text-lg">Sign Out</span>
         </div>
-       
+        {
+            Error && <p className="text-red-500 mt-5">{Error}</p>
+           }
+           {
+            updateSuccess && <p className="text-green-700 mt-5">
+              User is Updated Successfully
+            </p>
+           }
     </div>
 )
 }
