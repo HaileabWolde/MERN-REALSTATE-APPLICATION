@@ -1,10 +1,12 @@
 import { errorHandler } from "./error.js"
 import jwt from 'jsonwebtoken'
 export const Auth = (req, res, next)=>{
-    const token = req.cookies.access_token
-    if(!token){
+    const authHeader = req.headers.authorization
+    
+    if(!authHeader || !authHeader.startsWith('Bearer ')){
         return next(errorHandler(500, "UnAuthorized"))
     }
+    const token = authHeader.split(" ")[1]
     
     try{
         const payload = jwt.verify(token, process.env.JWT_SECRET)

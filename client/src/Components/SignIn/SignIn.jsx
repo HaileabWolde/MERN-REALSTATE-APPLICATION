@@ -34,11 +34,11 @@ const SignIn = ()=>{
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(info)
+            body: JSON.stringify(info),
           });
       
           const data = await res.json();
-      
+        
           if (data.success === false) {
            dispatch(SignInFailure(data.message))
           } else {

@@ -12,7 +12,7 @@ import { app } from "../../FireBase/firebase"
 const Profile = ()=>{
     const fileRef = useRef(null)
     const dispatch = useDispatch()
-    const { CurrentUser, Error, Loading} =useSelector((state)=> state.user)
+    const { CurrentUser, Error, Loading, token} =useSelector((state)=> state.user)
     const [updateSuccess, setUpdateSuccess] = useState(false)
     const [file, setFile] = useState(undefined);
     const [filePerc, setFilePerc] = useState(0);
@@ -65,7 +65,8 @@ const Profile = ()=>{
       const result = await fetch(endpoint, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
         },
         body: JSON.stringify(formdata)
       } )
