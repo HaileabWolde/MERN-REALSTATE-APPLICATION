@@ -18,9 +18,9 @@ const Profile = ()=>{
     const [filePerc, setFilePerc] = useState(0);
     const [fileUploadError, setFileUploadError] = useState(false);
     const [formdata, setFormData] = useState({
-        Username: '',
-        email: '',
-        password: ''
+        Username: CurrentUser.Username,
+        email: CurrentUser.email,
+        password: CurrentUser.password
     })
     const handleChange = (e)=>{
         setFormData({
@@ -109,7 +109,7 @@ return (
         <input type="text" 
         placeholder="Username"
         name="Username"
-        defaultValue={CurrentUser.Username}
+        value={formdata.Username}
         onChange={handleChange}
         className="p-4 border rounded-lg text-lg"/>
         <input type="email" 
@@ -117,14 +117,14 @@ return (
         name="email" 
         onChange={handleChange}
         className="p-4  border rounded-lg text-lg"
-        defaultValue={CurrentUser.email}
+        value={formdata.email}
         />
         <input type="password" 
         placeholder="Password"
         onChange={handleChange}
         name="password" 
         className="p-4 border rounded-lg text-lg"
-        defaultValue={CurrentUser.password}/>
+        value={formdata.password}/>
         <button type="submit" className="text-white bg-slate-700 p-4 rounded-lg text-xl hover:opacity-90">{Loading ? 'Loading...' : 'UPDATE'}</button>
         </form>
         <div className="flex justify-between mt-5">
