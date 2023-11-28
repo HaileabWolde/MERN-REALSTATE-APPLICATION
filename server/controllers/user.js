@@ -86,12 +86,7 @@ export const updateuser = async (req, res, next)=>{
        if(!Email || !user){
         return next(errorHandler(500, "Please Provide the necessary credentials"))
        }
-       const exisitingUser = await UserSchema.findOne({
-        $or: [{email: Email}, {Username: user}]
-       })
-       if(exisitingUser){
-        return next(errorHandler(500, "email or username already exists"))
-       }
+       
         if(pass){
              hashedPassword = await bcrypt.hash(pass, 10)
         }

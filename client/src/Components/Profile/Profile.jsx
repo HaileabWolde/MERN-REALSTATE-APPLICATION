@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react"
 import { useSelector } from "react-redux"
-import { UpdateInFailure, UpdateInStart, UpdateInSuccess } from "../../redux/user/userSlice";
+import { UpdateInFailure, UpdateInStart, UpdateInSuccess, ErrorInSuccess } from "../../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import {
     getDownloadURL,
@@ -34,6 +34,22 @@ const Profile = ()=>{
     }
   }, [file])
 
+  useEffect(()=>{
+    if(updateSuccess || Error){
+     const timeoutId =  setTimeout(()=>{
+        setUpdateSuccess(false)
+        dispatch(ErrorInSuccess())
+        
+      }, 3000)
+
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
+
+  }, [updateSuccess, Error])
+
+  
   const handleFileUpload = (file) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file?.name;
