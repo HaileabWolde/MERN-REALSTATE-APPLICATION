@@ -114,7 +114,7 @@ const Profile = ()=>{
           })
           const data = res.json()
           if(data.success === false){
-            dispatch(DeleteInSuccess(data.message))
+            dispatch(DeleteInFailure(data.message))
           }
           else{
             dispatch(DeleteInSuccess())
@@ -124,6 +124,15 @@ const Profile = ()=>{
           dispatch(DeleteInFailure(error))
         }
   }
+const handleSignout = ()=>{
+      try{
+        dispatch(DeleteInStart())
+        dispatch(DeleteInSuccess())
+      }
+      catch(error){
+        dispatch(DeleteInFailure(error))
+      }
+}
 return (
     <div className="max-w-lg mx-auto mt-14">
         <h1 className="font-semibold text-4xl text-center">Profile</h1>
@@ -170,7 +179,7 @@ return (
         </form>
         <div className="flex justify-between mt-5">
             <span className="text-red-700 text-lg cursor-pointer hover:underline" onClick={handleDelete}>Delete Account</span>
-            <span className="text-red-700 text-lg cursor-pointer hover:underline">Sign Out</span>
+            <span className="text-red-700 text-lg cursor-pointer hover:underline" onClick={handleSignout}>Sign Out</span>
         </div>
         {
             Error && <p className="text-red-500 mt-5">{Error}</p>
