@@ -141,7 +141,7 @@ return (
         name="password" 
         className="p-4 border rounded-lg text-lg"
         value={formdata.password}/>
-        <button type="submit" className="text-white bg-slate-700 p-4 rounded-lg text-xl hover:opacity-90">{Loading ? 'Loading...' : 'UPDATE'}</button>
+        <button type="submit" disabled={Loading} className="text-white bg-slate-700 p-4 rounded-lg text-xl hover:opacity-90">{Loading ? 'Loading...' : 'UPDATE'}</button>
         </form>
         <div className="flex justify-between mt-5">
             <span className="text-red-700 text-lg">Delete Account</span>

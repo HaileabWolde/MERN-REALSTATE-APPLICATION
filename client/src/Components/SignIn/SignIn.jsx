@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from 'react-redux'
 import {useNavigate} from 'react-router-dom'
-import { SignInFailure, SignInSuccess, SignInStart } from "../../redux/user/userSlice"
+import { SignInFailure, SignInSuccess, SignInStart, ErrorInSuccess } from "../../redux/user/userSlice"
 import OAuth from '../OAuth/OAuth'
 const SignIn = ()=>{
     const navigate = useNavigate()
@@ -51,6 +51,21 @@ const SignIn = ()=>{
           // Handle any network or request errors
         }
       };
+
+      useEffect(()=>{
+        if(Error){
+         const timeoutId =  setTimeout(()=>{
+           dispatch(ErrorInSuccess())
+            
+          }, 3000)
+    
+          return () => {
+            clearTimeout(timeoutId);
+          };
+        }
+    
+      }, [Error])
+    
     return (
         <div className="max-w-xl mx-auto my-12 text-center">
            <h1 className="font-semibold text-4xl m-">{signup ? 'Sign Up' : 'Sign In'}</h1>

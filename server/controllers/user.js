@@ -105,3 +105,19 @@ export const updateuser = async (req, res, next)=>{
         next(error)
     }
 }
+
+export const deleteuser = async (req, res, next)=>{
+    const {id} = req.params
+    try{
+        if(id !== req.userId){
+            return next(errorHandler(500, "Please Only delete your own account"))
+        }   
+        
+        const deletedUser = await UserSchema.findByIdAndDelete(id)
+        res.status(200).json({msg: 'User is Deleted Successfully'})
+    }
+    catch(error){
+        next(error)
+    }
+
+}
