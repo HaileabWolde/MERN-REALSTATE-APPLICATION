@@ -3,6 +3,7 @@ import { useSelector } from "react-redux"
 import { UpdateInFailure, UpdateInStart, UpdateInSuccess, 
   ErrorInSuccess, DeleteInFailure, DeleteInStart, DeleteInSuccess } from "../../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import {
     getDownloadURL,
     getStorage,
@@ -176,6 +177,15 @@ return (
         className="p-4 border rounded-lg text-lg"
         value={formdata.password}/>
         <button type="submit" disabled={Loading} className="text-white bg-slate-700 p-4 rounded-lg text-xl hover:opacity-90">{Loading ? 'Loading...' : 'UPDATE'}</button>
+    
+        <Link
+          className='bg-green-700 text-white p-4 text-xl rounded-lg uppercase text-center hover:opacity-95'
+          to="/create-Lisiting"
+        >
+          Create Listing
+        </Link>
+     
+       
         </form>
         <div className="flex justify-between mt-5">
             <span className="text-red-700 text-lg cursor-pointer hover:underline" onClick={handleDelete}>Delete Account</span>

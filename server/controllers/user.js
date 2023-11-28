@@ -53,8 +53,7 @@ export const google = async (req, res, next)=>{
                 const token = user.createJWT()
                 const {password: pass, ...rest} = user._doc
               
-                return res.cookie('access_token', token, {httpOnly: true})
-                .status(200).json(rest)
+               res.status(200).json({rest, token})
             }
             else{
                 const username = name.split(" ").join("")
