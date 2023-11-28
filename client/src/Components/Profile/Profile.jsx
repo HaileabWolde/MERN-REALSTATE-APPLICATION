@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react"
 import { useSelector } from "react-redux"
-import { UpdateInFailure, UpdateInStart, UpdateInSuccess, ErrorInSuccess } from "../../redux/user/userSlice";
+import { UpdateInFailure, UpdateInStart, UpdateInSuccess, 
+  ErrorInSuccess, DeleteInFailure, DeleteInStart, DeleteInSuccess } from "../../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import {
     getDownloadURL,
@@ -99,6 +100,30 @@ const Profile = ()=>{
       console.log(error)
     }
   }
+  const handleDelete = async ()=>{
+     
+        let endpoint = `http://localhost:5000/users/delete/${CurrentUser._id}`
+        try{
+          dispatch(DeleteInStart())
+          const res = await fetch(endpoint, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`
+            }
+          })
+          const data = res.json()
+          if(data.success === false){
+            dispatch(DeleteInSuccess(data.message))
+          }
+          else{
+            dispatch(DeleteInSuccess())
+          }
+        }
+        catch(error){
+          dispatch(DeleteInFailure(error))
+        }
+  }
 return (
     <div className="max-w-lg mx-auto mt-14">
         <h1 className="font-semibold text-4xl text-center">Profile</h1>
@@ -144,8 +169,8 @@ return (
         <button type="submit" disabled={Loading} className="text-white bg-slate-700 p-4 rounded-lg text-xl hover:opacity-90">{Loading ? 'Loading...' : 'UPDATE'}</button>
         </form>
         <div className="flex justify-between mt-5">
-            <span className="text-red-700 text-lg">Delete Account</span>
-            <span className="text-red-700 text-lg">Sign Out</span>
+            <span className="text-red-700 text-lg cursor-pointer hover:underline" onClick={handleDelete}>Delete Account</span>
+            <span className="text-red-700 text-lg cursor-pointer hover:underline">Sign Out</span>
         </div>
         {
             Error && <p className="text-red-500 mt-5">{Error}</p>

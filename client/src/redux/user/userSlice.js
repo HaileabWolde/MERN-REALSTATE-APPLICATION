@@ -38,13 +38,27 @@ const initialState = {
       UpdateInFailure: (state, action)=>{
         state.Error = action.payload
         state.Loading = false
+      },
+      DeleteInStart: (state)=>{
+        state.Loading = true
+      },
+      DeleteInFailure: (state)=>{
+        state.Error = action.payload,
+        state.Loading = false
+      },
+      DeleteInSuccess: (state)=>{
+        state.CurrentUser = null
+        state.Error = null,
+        state.Loading = false
       }
     },
   })
   
   // Action creators are generated for each case reducer function
   export const { SignInStart,  SignInSuccess, SignInFailure, 
-    UpdateInFailure, UpdateInSuccess, UpdateInStart, ErrorInSuccess } = userSlice.actions
+    UpdateInFailure, UpdateInSuccess, UpdateInStart, ErrorInSuccess,
+    DeleteInFailure, DeleteInStart, DeleteInSuccess
+   } = userSlice.actions
   
   export default userSlice.reducer
   
