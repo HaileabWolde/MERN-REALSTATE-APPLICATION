@@ -1,6 +1,8 @@
 import { useState } from "react"
 const CreateLisiting = ()=>{
+    const [files, setFiles] = useState([])
     const [formdata, setFormData] = useState({
+        imageurl:[],
         name: "",
         description: "",
         address: "",
@@ -10,7 +12,8 @@ const CreateLisiting = ()=>{
         Offer: false,
         Beds: 1,
         Baths: 1,
-        RegularPrice: 1
+        RegularPrice: 1,
+        Discounted: 1
 
     })
    
@@ -34,12 +37,12 @@ const handleChange = (e)=>{
     }
    
 }
-console.log(formdata)
+
 return (
   <main className="max-w-4xl mx-auto">
     <h1 className="font-bold text-center my-12 text-4xl">Create a Lisiting</h1>
     <form className="flex flex-col md:flex-row gap-4">
-        <div className="flex flex-col gap-2 flex-1">
+        <div className="flex flex-col gap-2 flex-1 py-6">
             <input
             type="text"
             placeholder="Name"
@@ -146,16 +149,35 @@ return (
                 <input
                 type="number"
                 id="RegularPrice"
+                min={1}
                 required
                 className="p-3 border border-gray-300 rounded-lg"
                 defaultValue={formdata.RegularPrice}
                 onChange={handleChange}
                 />
                 <div className="flex flex-col items-center">
-                    <span>Regular Price</span>
-                    <span>($ / Month)</span>
+                    <span className="text-xl">Regular Price</span>
+                    <span  className="text-sm">($ / Month)</span>
                 </div>
             </div>
+            {
+                formdata.Offer && 
+                <div className="flex gap-2 items-center">
+                <input
+                type="number"
+                id="Discounted"
+                min={1}
+                required
+                className="p-3 border border-gray-300 rounded-lg"
+                defaultValue={formdata.Discounted}
+                onChange={handleChange}
+                />
+                <div className="flex flex-col items-center">
+                    <span  className="text-xl">Discounted Price</span>
+                    <span className="text-sm">($ / Month)</span>
+                </div>
+            </div>
+            }
           
         </div>
         <div className="flex flex-col gap-4">
@@ -167,7 +189,7 @@ return (
                 <input
                 type="file"
                 className="p-3 border border-gray-300"
-
+                onChange={(e)=>setFiles(e.target.files)}
                 />
                 <button className="p-3 text-green-700 border border-green-700">UPLOAD</button>
             </div>
