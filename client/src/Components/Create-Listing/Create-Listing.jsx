@@ -1,17 +1,40 @@
 import { useState } from "react"
 const CreateLisiting = ()=>{
-    const [formdata, setFomrData] = useState({
+    const [formdata, setFormData] = useState({
         name: "",
         description: "",
         address: "",
         type: "Rent",
-        Parking: "false",
-        Furnished: "false",
-        Offer: "false",
-        Beds: "1",
-        Baths: "1"
+        Parking: false,
+        Furnished: false,
+        Offer: false,
+        Beds: 1,
+        Baths: 1,
+        RegularPrice: 1
 
     })
+   
+const handleChange = (e)=>{
+    if(e.target.type === 'text' || e.target.type === 'number'){
+        setFormData({
+            ...formdata,
+            [e.target.id]: e.target.value
+        }) }
+    else if(e.target.id === "Sell" || e.target.id === 'Rent'){
+        setFormData({
+            ...formdata,
+            type: e.target.id
+        })
+    }
+    else if(e.target.id === "Parking" || e.target.id === "Furnished" || e.target.id === "Offer"){
+        setFormData({
+            ...formdata,
+            [e.target.id]: e.target.checked
+        })
+    }
+   
+}
+console.log(formdata)
 return (
   <main className="max-w-4xl mx-auto">
     <h1 className="font-bold text-center my-12 text-4xl">Create a Lisiting</h1>
@@ -20,69 +43,75 @@ return (
             <input
             type="text"
             placeholder="Name"
-            name="name"
+            id="name"
             className="p-3 border rounded-lg text-xl"
             defaultValue={formdata.name}
+            onChange={handleChange}
             required
             />
             <textarea
             type="text"
             placeholder="Description"
-            name="description"
-            value={formdata.description}
+            id="description"
+            defaultValue={formdata.description}
+            onChange={handleChange}
             className="p-3 border rounded-lg text-xl"
             required
             />
             <input
             type="text"
             placeholder="Address"
-            name="address"
-            value={formdata.address}
+            id="address"
+            defaultValue={formdata.address}
             className="p-3 border rounded-lg text-xl"
             required
+            onChange={handleChange}
             />
             <div className="flex gap-6 flex-wrap">
                 <div className="flex gap-2">
                     <input 
                     type="checkbox"
-                    name="Sell"
+                    id="Sell"
                     className="w-5"
-                
+                    onChange={handleChange}
+                    checked={formdata.type === 'Sell'}
                     />
                     <span>Sell</span>
                 </div>
                 <div className="flex gap-2">
                     <input 
                     type="checkbox"
-                    name="Rent"
+                    id="Rent"
                     className="w-5"
+                    onChange={handleChange}
+                    checked={formdata.type === 'Rent'}
                     />
                     <span>Rent</span>
                 </div>
                 <div className="flex gap-2">
                     <input 
                     type="checkbox"
-                    name="Parking"
+                    id="Parking"
                     className="w-5"
-                    value={formdata.Parking}
+                    onChange={handleChange}
                     />
                     <span>Parking spot</span>
                 </div>
                 <div className="flex gap-2">
                     <input 
                     type="checkbox"
-                    name="Furnished"
+                    id="Furnished"
                     className="w-5"
-                    value={formdata.Furnished}
+                    onChange={handleChange}
                     />
                     <span>Furnished</span>
                 </div>
                 <div className="flex gap-2">
                     <input 
                     type="checkbox"
-                    name="Offer"
+                    id="Offer"
                     className="w-5"
-                    value={formdata.Offer}
+                    onChange={handleChange}
                     />
                     <span>Offer</span>
                 </div>
@@ -91,20 +120,24 @@ return (
                 <div className="flex items-center gap-2 ">
                     <input
                     type="number"
+                    id="Beds"
                     min='1'
                     max='10'
                     className='p-3 border border-gray-300 rounded-lg'
-                    value={formdata.Beds}
+                    defaultValue={formdata.Beds}
+                    onChange={handleChange}
                     />
                     <span>Beds</span>
                 </div>
                 <div className="flex items-center gap-2 flex-wrap">
                     <input
                     type="number"
+                    id="Baths"
                     min='1'
                     max='10'
                     className='p-3 border border-gray-300 rounded-lg'
-                    value={formdata.Baths}
+                    defaultValue={formdata.Baths}
+                    onChange={handleChange}
                     />
                     <span>Baths</span>
                 </div>
@@ -112,14 +145,18 @@ return (
             <div className="flex gap-2 items-center">
                 <input
                 type="number"
+                id="RegularPrice"
                 required
                 className="p-3 border border-gray-300 rounded-lg"
+                defaultValue={formdata.RegularPrice}
+                onChange={handleChange}
                 />
                 <div className="flex flex-col items-center">
                     <span>Regular Price</span>
                     <span>($ / Month)</span>
                 </div>
             </div>
+          
         </div>
         <div className="flex flex-col gap-4">
             <p className="font-bold">Images:
