@@ -1,20 +1,35 @@
+import { useState } from "react"
 const CreateLisiting = ()=>{
+    const [formdata, setFomrData] = useState({
+        name: "",
+        description: "",
+        address: "",
+        type: "Rent",
+        Parking: "false",
+        Furnished: "false",
+        Offer: "false",
+        Beds: "1",
+        Baths: "1"
+
+    })
 return (
   <main className="max-w-4xl mx-auto">
     <h1 className="font-bold text-center my-12 text-4xl">Create a Lisiting</h1>
-    <form className="flex flex-col sm:flex-row gap-4">
+    <form className="flex flex-col md:flex-row gap-4">
         <div className="flex flex-col gap-2 flex-1">
             <input
             type="text"
             placeholder="Name"
             name="name"
             className="p-3 border rounded-lg text-xl"
+            defaultValue={formdata.name}
             required
             />
             <textarea
             type="text"
             placeholder="Description"
             name="description"
+            value={formdata.description}
             className="p-3 border rounded-lg text-xl"
             required
             />
@@ -22,6 +37,7 @@ return (
             type="text"
             placeholder="Address"
             name="address"
+            value={formdata.address}
             className="p-3 border rounded-lg text-xl"
             required
             />
@@ -31,6 +47,7 @@ return (
                     type="checkbox"
                     name="Sell"
                     className="w-5"
+                
                     />
                     <span>Sell</span>
                 </div>
@@ -47,6 +64,7 @@ return (
                     type="checkbox"
                     name="Parking"
                     className="w-5"
+                    value={formdata.Parking}
                     />
                     <span>Parking spot</span>
                 </div>
@@ -55,6 +73,7 @@ return (
                     type="checkbox"
                     name="Furnished"
                     className="w-5"
+                    value={formdata.Furnished}
                     />
                     <span>Furnished</span>
                 </div>
@@ -63,6 +82,7 @@ return (
                     type="checkbox"
                     name="Offer"
                     className="w-5"
+                    value={formdata.Offer}
                     />
                     <span>Offer</span>
                 </div>
@@ -74,6 +94,7 @@ return (
                     min='1'
                     max='10'
                     className='p-3 border border-gray-300 rounded-lg'
+                    value={formdata.Beds}
                     />
                     <span>Beds</span>
                 </div>
@@ -83,6 +104,7 @@ return (
                     min='1'
                     max='10'
                     className='p-3 border border-gray-300 rounded-lg'
+                    value={formdata.Baths}
                     />
                     <span>Baths</span>
                 </div>
