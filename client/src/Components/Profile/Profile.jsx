@@ -148,7 +148,7 @@ const handleListing = async ()=> {
       }
     })
     const data = await res.json()
-   console.log(data)
+    console.log(data)
     if(data.success === false){
       dispatch(DeleteInFailure(data.message))
     }
@@ -156,6 +156,29 @@ const handleListing = async ()=> {
   }
   catch(error){
     dispatch(DeleteInFailure(error))
+  }
+}
+const DeleteListing = async(Lisitingid)=>{
+  let endpoint = `http://localhost:5000/lisiting/deleteListing/${Lisitingid}`
+  try{
+    const res = await fetch(endpoint, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    })
+    const data = await res.json()
+   if(data.success === false){
+    console.log(data.message)
+   }
+  
+   setListing((prev) =>
+   prev.filter((listing) => listing._id !== Lisitingid)
+ );
+  }
+  catch(error){
+    console.log(error.message)
   }
 }
 const ShowLisit = ()=>{
@@ -250,7 +273,7 @@ return (
                 <img src={Lisit.imageurl} alt={Lisit.name} className="h-32 w-32 cursor-pointer"/>
                 <h1 className="font-bold text-xl mt-8">{Lisit.name}</h1>
                 <div className="flex flex-col items-center mt-8">
-                  <button className="text-red-700 uppercase text-lg hover:underline">DELETE</button>
+                  <button className="text-red-700 uppercase text-lg hover:underline" onClick={()=> DeleteListing(Lisit._id)}>DELETE</button>
                   <button className="text-green-700 uppercase text-lg hover:underline">EDIT</button>
                 </div>
               </div>)}
