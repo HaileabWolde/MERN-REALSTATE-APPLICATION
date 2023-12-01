@@ -15,6 +15,8 @@ const Profile = ()=>{
     const fileRef = useRef(null)
     const dispatch = useDispatch()
     const { CurrentUser, Error, Loading, token} =useSelector((state)=> state.user)
+    const [Listing, setListing] = useState([])
+    const [Show, setShow] = useState(true)
     const [updateSuccess, setUpdateSuccess] = useState(false)
     const [file, setFile] = useState(undefined);
     const [filePerc, setFilePerc] = useState(0);
@@ -146,15 +148,21 @@ const handleListing = async ()=> {
       }
     })
     const data = await res.json()
-    console.log(data)
+   console.log(data)
     if(data.success === false){
       dispatch(DeleteInFailure(data.message))
     }
-
+    setListing(data)
   }
   catch(error){
     dispatch(DeleteInFailure(error))
   }
+}
+const ShowLisit = ()=>{
+  setShow((prev)=> !prev)
+}
+const hide = ()=>{
+  setListing([])
 }
 return (
     <div className="max-w-lg mx-auto mt-14">
@@ -222,7 +230,32 @@ return (
               User is Updated Successfully
             </p>
            }
-           <button className="text-green-700 text-center w-full text-xl pb-6 hover:underline" onClick={handleListing}>Show Listing</button>
+          <button onClick={ShowLisit} className="w-full text-center"> {Show ?
+          
+            <button className="text-green-700 text-xl pb-6 hover:underline" onClick={handleListing}>
+                Show Listing
+              </button>
+          
+           
+          : <button className="text-green-700 text-center w-full text-xl pb-6 hover:underline" onClick={hide}>Hide Listing</button> }</button>
+         
+           {
+            Listing.length > 0 && 
+            <div className="flex flex-col gap-4"> 
+                <h1 className='text-center mt-7 text-2xl font-semibold'>
+                     Your Listings
+                </h1>
+              {Listing.map((Lisit, index)=> 
+              <div className=" flex justify-between border rounded-lg p-3 " key={index}> 
+                <img src={Lisit.imageurl} alt={Lisit.name} className="h-32 w-32 cursor-pointer"/>
+                <h1 className="font-bold text-xl mt-8">{Lisit.name}</h1>
+                <div className="flex flex-col items-center mt-8">
+                  <button className="text-red-700 uppercase text-lg hover:underline">DELETE</button>
+                  <button className="text-green-700 uppercase text-lg hover:underline">EDIT</button>
+                </div>
+              </div>)}
+            </div>
+           }
     </div>
 )
 }
