@@ -19,3 +19,13 @@ export const getListing = async(req, res, next)=>{
         next(error)
     }
 }
+export const deleteListing = async(req, res, next)=>{
+    const {id} = req.params
+    try{
+        const deltedList = await Listing.findByIdAndDelete(id)
+        res.status(200).json("Lists is deleted")
+    }
+    catch(error){
+        next(error)
+    }
+}
