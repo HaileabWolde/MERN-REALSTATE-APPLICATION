@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import { UpdateInFailure, UpdateInStart, UpdateInSuccess, 
   ErrorInSuccess, DeleteInFailure, DeleteInStart, DeleteInSuccess } from "../../redux/user/userSlice";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import {
     getDownloadURL,
     getStorage,
@@ -270,11 +270,17 @@ return (
                 </h1>
               {Listing.map((Lisit, index)=> 
               <div className=" flex justify-between border rounded-lg p-3 " key={index}> 
-                <img src={Lisit.imageurl} alt={Lisit.name} className="h-32 w-32 cursor-pointer"/>
+              <Link to={`/edit-listing/${Lisit._id}`}>
+              <img src={Lisit.imageurl} alt={Lisit.name} className="h-32 w-32 cursor-pointer"/>
+              </Link>
+               
                 <h1 className="font-bold text-xl mt-8">{Lisit.name}</h1>
                 <div className="flex flex-col items-center mt-8">
                   <button className="text-red-700 uppercase text-lg hover:underline" onClick={()=> DeleteListing(Lisit._id)}>DELETE</button>
+                  <Link to={`/edit-listing/${Lisit._id}`}>
                   <button className="text-green-700 uppercase text-lg hover:underline">EDIT</button>
+                  </Link>
+                 
                 </div>
               </div>)}
             </div>
