@@ -10,3 +10,12 @@ export const createListing = async (req, res, next)=>{
         next(error)
     }
 }
+export const getListing = async(req, res, next)=>{
+    try{
+        const Lists = await Listing.find({UserRef: req.userId})
+        res.status(200).json(Lists)
+    }
+    catch(error){
+        next(error)
+    }
+}

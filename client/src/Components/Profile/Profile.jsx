@@ -113,7 +113,7 @@ const Profile = ()=>{
               Authorization: `Bearer ${token}`
             }
           })
-          const data = res.json()
+          const data = await res.json()
           if(data.success === false){
             dispatch(DeleteInFailure(data.message))
           }
@@ -133,6 +133,28 @@ const handleSignout = ()=>{
       catch(error){
         dispatch(DeleteInFailure(error))
       }
+}
+const handleListing = async ()=> {
+  let endpoint = `http://localhost:5000/lisiting/getListing`
+
+  try{
+    const res = await fetch(endpoint, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    })
+    const data = await res.json()
+    console.log(data)
+    if(data.success === false){
+      dispatch(DeleteInFailure(data.message))
+    }
+
+  }
+  catch(error){
+    dispatch(DeleteInFailure(error))
+  }
 }
 return (
     <div className="max-w-lg mx-auto mt-14">
@@ -200,7 +222,7 @@ return (
               User is Updated Successfully
             </p>
            }
-           <button className="text-green-700 text-center w-full text-xl pb-6 hover:underline">Show Listing</button>
+           <button className="text-green-700 text-center w-full text-xl pb-6 hover:underline" onClick={handleListing}>Show Listing</button>
     </div>
 )
 }
