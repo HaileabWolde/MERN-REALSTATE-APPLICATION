@@ -1,4 +1,6 @@
 import { useState } from "react"
+import {useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
     getDownloadURL,
     getStorage,
@@ -9,6 +11,7 @@ import { app } from "../../FireBase/firebase"
 const CreateLisiting = ()=>{
     
     const [files, setFiles] = useState([])
+    const navigate = useNavigate()
     const [formdata, setFormData] = useState({
         imageurl:[],
         name: "",
@@ -24,11 +27,14 @@ const CreateLisiting = ()=>{
         Discounted: 1
 
     })
+    const {token} = useSelector((state)=> state.user)
+    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(false)
    const [uploading, setUploading] = useState(false)
    const [imageUploadError, setImageUploadError] = useState(false)
 
 const handleChange = (e)=>{
-    if(e.target.type === 'text' || e.target.type === 'number'){
+    if(e.target.type === 'text' || e.target.type === 'number' || e.target.type === 'textarea'){
         setFormData({
             ...formdata,
             [e.target.id]: e.target.value
@@ -101,10 +107,48 @@ const handleImageSubmit = () => {
     });
   };
 
+  const RemoveImage = (index)=>{
+    setFormData({
+      ...formdata,
+      imageurl: formdata.imageurl.filter((_, i)=> i !== index)
+    })
+  }
+  
+  const handleSubmit = async (e)=>{
+    e.preventDefault();
+    const endpoint = 'http://localhost:5000/lisiting/create'
+    try{
+      setLoading(true)
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(formdata),
+      })
+      const data = await res.json()
+    
+      // Add this line to log the data
+      if(data.success === false){
+        setError(data.message)
+      }
+
+      navigate(`/listing/${data._id}`);
+      setLoading(false)
+     
+    }
+    catch(error){
+      setLoading(error)
+      setError(error.message)
+    }
+
+  }
+  
 return (
   <main className="max-w-4xl mx-auto">
     <h1 className="font-bold text-center my-12 text-4xl">Create a Lisiting</h1>
-    <form className="flex flex-col md:flex-row gap-4">
+    <form className="flex flex-col md:flex-row gap-4" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2 flex-1 py-6">
             <input
             type="text"
@@ -269,7 +313,7 @@ return (
           {formdata.imageurl.length > 0 &&
             formdata.imageurl.map((url, index) => (
               <div
-                key={index}
+                key={url}
                 className='flex justify-between p-3 border items-center'
               >
                 <img
@@ -280,12 +324,18 @@ return (
                 <button
                   type='button'
                   className='p-3 text-red-700 rounded-lg uppercase hover:opacity-75'
+                  onClick={()=> RemoveImage(index)}
                 >
                   Delete
                 </button>
               </div>
             ))}
-            <button className="bg-slate-700 text-white p-3 rounded-lg">CREATE LISTING</button>
+            <button className="bg-slate-700 text-white p-3 rounded-lg" type="submit">{loading ? 'Creating ...' : 'CREATE LISTING'}</button>
+            
+            {error && <p  className='text-red-700 text-sm'>
+             {error}
+              </p>}
+          
         </div>
     </form>
   </main>

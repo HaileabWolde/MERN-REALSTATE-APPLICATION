@@ -191,6 +191,7 @@ return (
             <span className="text-red-700 text-lg cursor-pointer hover:underline" onClick={handleDelete}>Delete Account</span>
             <span className="text-red-700 text-lg cursor-pointer hover:underline" onClick={handleSignout}>Sign Out</span>
         </div>
+        
         {
             Error && <p className="text-red-500 mt-5">{Error}</p>
            }
@@ -199,6 +200,7 @@ return (
               User is Updated Successfully
             </p>
            }
+           <button className="text-green-700 text-center w-full text-xl pb-6 hover:underline">Show Listing</button>
     </div>
 )
 }
