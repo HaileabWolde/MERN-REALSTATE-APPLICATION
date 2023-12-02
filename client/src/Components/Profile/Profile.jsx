@@ -270,7 +270,7 @@ return (
                 </h1>
               {Listing.map((Lisit, index)=> 
               <div className=" flex justify-between border rounded-lg p-3 " key={index}> 
-              <Link to={`/edit-listing/${Lisit._id}`}>
+              <Link to={`/listing/${Lisit._id}`}>
               <img src={Lisit.imageurl} alt={Lisit.name} className="h-32 w-32 cursor-pointer"/>
               </Link>
                

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import {useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
     getDownloadURL,
     getStorage,
@@ -10,6 +10,7 @@ import {
 import { app } from "../../FireBase/firebase"
 const EditListing = ()=>{
     const [files, setFiles] = useState([])
+    const navigate = useNavigate()
     const params = useParams()
     const lisitingId = params.id
    
@@ -131,13 +132,14 @@ const handleImageSubmit = () => {
         body: JSON.stringify(formdata),
       })
       const data = await res.json()
-      console.log(data)
+    
       // Add this line to log the data
       if(data.success === false){
         setError(data.message)
       }
 
       setLoading(false)
+      navigate(`/listing/${lisitingId}`)
      
     }
     catch(error){
@@ -156,7 +158,6 @@ const handleImageSubmit = () => {
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  Authorization: `Bearer ${token}`
                 },
             })
             const data = await res.json()
