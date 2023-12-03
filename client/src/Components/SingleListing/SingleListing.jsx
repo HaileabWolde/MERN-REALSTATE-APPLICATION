@@ -4,7 +4,16 @@ import {Swiper, SwiperSlide} from 'swiper/react'
 import SwiperCore from 'swiper'
 import { Navigation } from "swiper/modules"
 import 'swiper/css/bundle'
-
+import { MdLocationOn } from 'react-icons/md';
+import {
+  FaBath,
+  FaBed,
+  FaChair,
+  FaMapMarkedAlt,
+  FaMapMarkerAlt,
+  FaParking,
+  FaShare,
+} from 'react-icons/fa';
 const SingleListing = ()=>{
     SwiperCore.use([Navigation]);
     const [Loading, setLoading] = useState(false)
@@ -32,6 +41,7 @@ const SingleListing = ()=>{
             setFormData(data)
             setError(false)
             setLoading(false)
+            console.log(data)
             
         }
         catch(error){
@@ -53,7 +63,8 @@ return (
     {
         !Loading && !error && formdata && (
            <>
-            <Swiper navigation>
+           <div>
+           <Swiper navigation>
             {formdata.imageurl.map((url) => (
               <SwiperSlide key={url}>
                 <div
@@ -66,6 +77,42 @@ return (
               </SwiperSlide>
             ))}
           </Swiper>
+           </div>
+           <div className="mt-7 flex flex-col">
+                  <div className="flex gap -2">
+                    <span>{formdata.name} - $</span>
+                    {
+                      formdata.type === "Rent" ? <span className="ml-2">{formdata.RegularPrice} / month</span>:
+                      <span className="ml-2">{formdata.RegularPrice}</span>
+                    }
+                  </div>
+                  <div className="flex">
+                    <MdLocationOn  style={{ color: '#FF0000' }}   size={24}/>
+                    <span>{formdata.address}</span>
+                  </div>
+                  <div className="flex gap-4">
+                    <button className="text-white bg-red-900">{formdata.type === "Rent" ? 'For Rent': 'For Sale'}</button>
+                    {
+                      formdata.Discounted && <button className="text-white bg-red-900">${formdata.Discounted} discount</button>
+                    }
+                  </div>
+                  <div className="flex">
+                    <span>Description - </span>
+                    <p> {formdata.description}</p>
+                  </div>
+                  <div className="flex gap-4">
+                    <div className="flex gap-2">
+                    <IoBedSharp size={24} style={{ color: '#8B4513' }} />
+                    <span>{formdata.Beds} Beds</span>
+                    </div>
+                    <div className="flex gap-2">
+                    <TiToilet size={24} style={{ color: '#0074D9' }} />
+                    <span>{formdata.Baths} Baths</span>
+                    </div>
+                  </div>
+
+           </div>
+           
            </>
         )
     }
