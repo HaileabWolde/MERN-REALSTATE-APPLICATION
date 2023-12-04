@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react"
 import { useParams } from "react-router-dom"
+import {useSelector} from 'react-redux'
 import {Swiper, SwiperSlide} from 'swiper/react'
 import SwiperCore from 'swiper'
 import { Navigation } from "swiper/modules"
@@ -9,15 +10,16 @@ import {
   FaBath,
   FaBed,
   FaChair,
-  FaMapMarkedAlt,
-  FaMapMarkerAlt,
-  FaParking,
-  FaShare,
+ FaParking,
 } from 'react-icons/fa';
+import ContactComponent from "../Contact/Contact"
 const SingleListing = ()=>{
     SwiperCore.use([Navigation]);
+    const {CurrentUser} = useSelector((state)=> state.user)
+    console.log(CurrentUser._id)
     const [Loading, setLoading] = useState(false)
     const [formdata, setFormData] = useState(null)
+    const [Contact, setContact] = useState(false)
     const [error, setError] = useState(false)
     const params = useParams()
     const lisitingId = params.id
@@ -52,6 +54,10 @@ const SingleListing = ()=>{
     }
     fetchListing()
   }, [])
+
+  const handleContact = ()=>{
+    setContact((prev)=> !prev)
+  }
 return (
   <main>
     {
@@ -128,7 +134,18 @@ return (
                      }
                     </li>
                   </ul>
-
+                  {
+                    CurrentUser && formdata.UserRef === CurrentUser._id && !Contact && 
+                    (
+                      <button onClick={handleContact}>
+                        Hello World
+                      </button>
+                    )
+                  }
+                  {
+                    Contact && <ContactComponent formdata={formdata}/>
+                  }
+                
            </div>
            
            </div>

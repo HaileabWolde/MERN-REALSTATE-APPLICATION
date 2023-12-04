@@ -1,6 +1,19 @@
 import UserSchema from '../model/usermodel.js'
 import { errorHandler } from '../middlewares/error.js'
 import bcrypt from 'bcryptjs'
+
+export const getUser = async(req,res, next)=>{
+    const {id} = req.params
+
+    try{
+        const User = await UserSchema.findById(id)
+        const {password: pass, ...rest} = User._doc
+        res.status(200).json(rest)
+    }
+    catch(error){
+        next(error)
+    }
+}
 export const signup = async (req, res, next)=>{
 const {Username, email, password} = req.body
 
