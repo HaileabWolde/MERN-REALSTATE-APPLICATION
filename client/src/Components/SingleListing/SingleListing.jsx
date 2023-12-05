@@ -137,8 +137,8 @@ return (
                   {
                     CurrentUser && formdata.UserRef === CurrentUser._id && !Contact && 
                     (
-                      <button onClick={handleContact}>
-                        Hello World
+                      <button onClick={handleContact} className='bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95'>
+                      Contact LandLord
                       </button>
                     )
                   }
