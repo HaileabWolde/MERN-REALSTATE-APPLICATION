@@ -7,6 +7,7 @@ import Profile from './Components/Profile/Profile'
 import EditListing from './Components/EditListing/EditListing'
 import CreateLisiting from './Components/Create-Listing/Create-Listing'
 import SingleListing from './Components/SingleListing/SingleListing'
+import SearchListing  from './Components/Search/Search'
 import {useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
       <Route path="/signIn" element={<SignIn/>}/>
       <Route path="/profile" element={CurrentUser ?  <Profile/> : <Navigate to="/signIn"/>}/>
       <Route path="/create-Lisiting" element={ CurrentUser ? <CreateLisiting/>: <Navigate to="/signIn"/>}/>
+      <Route path='/search' element={<SearchListing/>}/>
       <Route path="/listing/:id" element={<SingleListing/>}/>
       <Route path="/edit-listing/:id" element={<EditListing/>}/>
      
