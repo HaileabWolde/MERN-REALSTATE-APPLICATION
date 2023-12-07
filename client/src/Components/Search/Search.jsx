@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import Listing from "../Listing/Listing"
 const SearchListing = ()=>{
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
+    const [listing, setListing] = useState([])
     const [formdata, setFormData] = useState({
         SearchTerm: '',
         Offer: false,
         type: 'all',
         Parking: false,
         Furnished: false,
-        sort: 'created_at',
-        order: 'desc'
-    })
+        sort: 'createdAt',
+        order: 'desc' // Add the 'order' property here
+      })
     const handleChange = (e)=>{
         if(e.target.id === 'SearchTerm'){
             setFormData({
@@ -33,7 +36,7 @@ const SearchListing = ()=>{
             )}
             if(e.target.id === 'sort_order'){
                 const value = e.target.value.split('_')
-                const sort = value[0] || 'created_at'
+                const sort = value[0] || 'createdAt'
                 const order = value[1] || 'desc'
                 setFormData(
                     {
@@ -51,13 +54,18 @@ const SearchListing = ()=>{
     const offerTermFromUrl = urlParams.get('Offer')
     const parkingTermFromUrl = urlParams.get('Parking')
     const furnishedTermFromUrl = urlParams.get('Furnished')
-    if(searchTermFromUrl || typeTermFromUrl || offerTermFromUrl){
+    const sortFromUrl = urlParams.get('sort');
+    const orderFromUrl = urlParams.get('order');
+
+    if(searchTermFromUrl || typeTermFromUrl || offerTermFromUrl ||  sortFromUrl || orderFromUrl){
         setFormData({
             SearchTerm: searchTermFromUrl || '',
             type: typeTermFromUrl || 'all',
             Offer: offerTermFromUrl === 'true' ? true : false,
             Parking: parkingTermFromUrl === 'true' ? true : false,
-            Furnished: furnishedTermFromUrl === 'true' ? true : false
+            Furnished: furnishedTermFromUrl === 'true' ? true : false,
+            sort: sortFromUrl || 'created_at',
+            order: orderFromUrl || 'desc',
         })
     }
     const searchQuery = urlParams.toString()
@@ -71,7 +79,7 @@ const SearchListing = ()=>{
                 }
             })
             const data = await res.json()
-            console.log(data)
+            setListing(data)
            
         }
         catch(error){
@@ -85,6 +93,7 @@ const SearchListing = ()=>{
   const handleSubmit = (e)=>{
     e.preventDefault()
     const urlParams = new URLSearchParams(window.location.search)
+    try{
     urlParams.set('SearchTerm', formdata.SearchTerm)
     urlParams.set('type', formdata.type)
     urlParams.set('Offer', formdata.Offer)
@@ -94,6 +103,11 @@ const SearchListing = ()=>{
     urlParams.set('order', formdata.order)
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`)
+    }
+    catch(error){
+        console.log(error.message)
+    }
+    
   }
   
     return (
@@ -201,8 +215,16 @@ const SearchListing = ()=>{
                 </form>
                    
             </div>
-            <div className="p-3">
-                <h1 className="font-semibold">Listing results:</h1>
+            <div className="p-8">
+                <h1 className="font-semibold text-3xl mb-2">Listing results:</h1>
+                {
+                    listing && 
+                    <div className="flex gap-8 flex-wrap">
+                        {
+                            listing.map((listed, index)=> <Listing listed={listed}/>)
+                        }
+                    </div>
+                }
 
             </div>
            

@@ -41,7 +41,9 @@ export const SearchListing = async(req,res,next)=> {
             Furnished = {$in : [false, true]}
         }
         const sort = req.query.sort || 'created_at'
+       
         const order = req.query.order || 'desc'
+       
 
         const listedSearch = await Listing.find({
             name: { $regex:SearchTerm, $options: 'i' },
