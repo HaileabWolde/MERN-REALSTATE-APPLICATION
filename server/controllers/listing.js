@@ -53,8 +53,7 @@ export const SearchListing = async(req,res,next)=> {
             Parking
         }).sort({[sort]: order}).limit(limit).skip(startIndex)
 
-        res.status(200).json(listedSearch)
- 
+        res.status(200).json(listedSearch);
     }
     catch(error){
         next(error)

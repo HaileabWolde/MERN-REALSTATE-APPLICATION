@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import Listing from "../Listing/Listing"
 const SearchListing = ()=>{
     const navigate = useNavigate()
+    const [showmore, setShowMore] = useState(false)
     const [loading, setLoading] = useState(false)
     const [listing, setListing] = useState([])
     const [formdata, setFormData] = useState({
@@ -79,6 +80,13 @@ const SearchListing = ()=>{
                 }
             })
             const data = await res.json()
+
+            if(data.length > 8){
+                setShowMore(true)
+            }
+            else{
+                setShowMore(false)
+            }
             setListing(data)
            
         }
@@ -108,6 +116,26 @@ const SearchListing = ()=>{
         console.log(error.message)
     }
     
+  }
+
+  const handleShowMore = async ()=>{
+    const urlParams = new URLSearchParams(window.location.search);
+    const Index = listing.length
+    urlParams.set('startIndex', Index)
+    const searchQuery = urlParams.toString()
+    try{
+        const res = await fetch(`http://localhost:5000/lisiting/getBySearch?${searchQuery}`)
+        const data = await res.json()
+        if(data.length > 8){
+            setShowMore(true)
+        }else{
+            setShowMore(false)
+        }
+        setListing([...listing, ...data])
+    }
+    catch(error){
+        console.log(error)
+    }           
   }
   
     return (
@@ -225,7 +253,9 @@ const SearchListing = ()=>{
                         }
                     </div>
                 }
-
+                 {
+                showmore && <button className="w-full text-center pt-7 hover:underline text-green-700 text-lg" onClick={handleShowMore}>Show more</button>
+            }
             </div>
            
         </div>
