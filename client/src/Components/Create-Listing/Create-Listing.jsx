@@ -23,8 +23,8 @@ const CreateLisiting = ()=>{
         Offer: false,
         Beds: 1,
         Baths: 1,
-        RegularPrice: 1,
-        Discounted: 1
+        RegularPrice: 50,
+        Discounted: 40
 
     })
     const {token} = useSelector((state)=> state.user)
@@ -116,6 +116,9 @@ const handleImageSubmit = () => {
   
   const handleSubmit = async (e)=>{
     e.preventDefault();
+    if(+formdata.RegularPrice < +formdata.Discounted){
+       return setError(`Discount price must be lower than regular price`)
+    }
     const endpoint = 'http://localhost:5000/lisiting/create'
     try{
       setLoading(true)
@@ -256,7 +259,7 @@ return (
                 <input
                 type="number"
                 id="RegularPrice"
-                min={1}
+                min={50}
                 required
                 className="p-3 border border-gray-300 rounded-lg"
                 defaultValue={formdata.RegularPrice}
@@ -273,7 +276,7 @@ return (
                 <input
                 type="number"
                 id="Discounted"
-                min={1}
+                min={45}
                 required
                 className="p-3 border border-gray-300 rounded-lg"
                 defaultValue={formdata.Discounted}

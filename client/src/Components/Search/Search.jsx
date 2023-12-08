@@ -4,7 +4,7 @@ import Listing from "../Listing/Listing"
 const SearchListing = ()=>{
     const navigate = useNavigate()
     const [showmore, setShowMore] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [listing, setListing] = useState([])
     const [formdata, setFormData] = useState({
         SearchTerm: '',
@@ -73,6 +73,8 @@ const SearchListing = ()=>{
     const fetchListing = async()=>{
         let endpoint = `http://localhost:5000/lisiting/getBySearch?${searchQuery}`
         try{
+            setLoading(true)
+            setShowMore(false)
             const res = await fetch(endpoint, {
                 method: 'GET',
                 headers: {
@@ -80,7 +82,7 @@ const SearchListing = ()=>{
                 }
             })
             const data = await res.json()
-
+           
             if(data.length > 8){
                 setShowMore(true)
             }
@@ -88,6 +90,7 @@ const SearchListing = ()=>{
                 setShowMore(false)
             }
             setListing(data)
+            setLoading(false)
            
         }
         catch(error){
@@ -244,7 +247,15 @@ const SearchListing = ()=>{
                    
             </div>
             <div className="p-8">
+               
                 <h1 className="font-semibold text-3xl mb-2">Listing results:</h1>
+                {!loading && listing.length === 0 && (
+                        <p className='text-xl text-slate-700'>No listing found!</p>
+                 )}
+                 {loading && (
+            <p className='text-xl text-slate-700 text-center w-full'>
+              Loading...
+            </p>)}
                 {
                     listing && 
                     <div className="flex gap-8 flex-wrap">
