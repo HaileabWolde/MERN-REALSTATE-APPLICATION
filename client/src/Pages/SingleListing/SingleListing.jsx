@@ -12,7 +12,7 @@ import {
   FaChair,
  FaParking,
 } from 'react-icons/fa';
-import ContactComponent from "../Contact/Contact"
+import ContactComponent from "../../Components/Contact/Contact"
 const SingleListing = ()=>{
     SwiperCore.use([Navigation]);
     const {CurrentUser} = useSelector((state)=> state.user)

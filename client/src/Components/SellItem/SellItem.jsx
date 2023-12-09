@@ -11,7 +11,7 @@ const SellItem = ({sellItem})=>{
                 <MdLocationOn style={{ color: '#FF0000' }} size={18}/>
                 <h1 className='text-sm text-gray-600 truncate w-full'>{sellItem.address}</h1>
             </div>
-            <p className='text-sm text-gray-600 line-clamp-3'>{sellItem.description}</p>
+            <p className='text-sm text-gray-600 line-clamp-2'>{sellItem.description}</p>
             <p className='text-slate-500 font-semibold text-lg'>$ {
                 sellItem.Offer ? sellItem.RegularPrice
                 :sellItem.Discounted

@@ -4,9 +4,9 @@ import {Swiper, SwiperSlide} from 'swiper/react'
 import SwiperCore from 'swiper'
 import { Navigation } from "swiper/modules"
 import 'swiper/css/bundle'
-import RentItem from "../RentItem/RentItem"
-import OfferItem from "../OfferItem/OfferItem"
-import SellItem from "../SellItem/SellItem"
+import RentItem from "../../Components/RentItem/RentItem"
+import OfferItem from "../../Components/OfferItem/OfferItem"
+import SellItem from "../../Components/SellItem/SellItem"
 const Home = ()=>{
     
     const [Offer, setOffer] = useState([])

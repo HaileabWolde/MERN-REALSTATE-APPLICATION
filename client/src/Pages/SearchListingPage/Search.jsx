@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import Listing from "../Listing/Listing"
+import Listing from "../../Components/Each Searched Item/Listing"
 const SearchListing = ()=>{
     const navigate = useNavigate()
     const [showmore, setShowMore] = useState(false)
