@@ -14,6 +14,10 @@ app.use(express.json())
 // Enable CORS
 app.use(cors());
 app.use(cookieParser());
+
+app.get('/', (req, res)=>{
+    res.json('Hello')
+})
 app.use('/users', userRoute)
 app.use('/lisiting', listingRoute)
 app.use((err, req, res, next)=>{

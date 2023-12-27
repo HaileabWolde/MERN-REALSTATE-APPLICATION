@@ -35,8 +35,8 @@ const NavBar = ()=>{
         <div className="flex justify-between max-w-6xl mx-auto p-3 items-center">
             <Link to="/">
             <h1 className="font-bold text-xl md:text-3xl">
-                <span className="text-slate-500 ">Sahand</span>
-                <span className="text-slate-700">Estate</span>
+                <span className="text-slate-500 ">REAL</span>
+                <span className="text-slate-700">ESTATE</span>
             </h1>
             </Link>
            
