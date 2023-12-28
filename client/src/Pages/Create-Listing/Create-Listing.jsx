@@ -119,7 +119,7 @@ const handleImageSubmit = () => {
     if(+formdata.RegularPrice < +formdata.Discounted){
        return setError(`Discount price must be lower than regular price`)
     }
-    const endpoint = 'http://localhost:5000/lisiting/create'
+    const endpoint = 'https://plain-jade-housecoat.cyclic.app/lisiting/create'
     try{
       setLoading(true)
       const res = await fetch(endpoint, {

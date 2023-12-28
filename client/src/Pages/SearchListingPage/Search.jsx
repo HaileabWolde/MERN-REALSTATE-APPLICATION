@@ -71,7 +71,7 @@ const SearchListing = ()=>{
     }
     const searchQuery = urlParams.toString()
     const fetchListing = async()=>{
-        let endpoint = `http://localhost:5000/lisiting/getBySearch?${searchQuery}`
+        let endpoint = `https://plain-jade-housecoat.cyclic.app/lisiting/getBySearch?${searchQuery}`
         try{
             setLoading(true)
             setShowMore(false)
@@ -127,7 +127,7 @@ const SearchListing = ()=>{
     urlParams.set('startIndex', Index)
     const searchQuery = urlParams.toString()
     try{
-        const res = await fetch(`http://localhost:5000/lisiting/getBySearch?${searchQuery}`)
+        const res = await fetch(`https://plain-jade-housecoat.cyclic.app/lisiting/getBySearch?${searchQuery}`)
         const data = await res.json()
         if(data.length > 8){
             setShowMore(true)

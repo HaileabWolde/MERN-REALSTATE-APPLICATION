@@ -16,7 +16,7 @@ const Home = ()=>{
     useEffect(() => {
         const fetchOffer = async () => {
             try {
-                const res = await fetch('http://localhost:5000/lisiting/getBySearch?Offer=true&limit=4');
+                const res = await fetch('https://plain-jade-housecoat.cyclic.app/lisiting/getBySearch?Offer=true&limit=4');
                 const data = await res.json();
                 console.log(data)
                setOffer(data)
@@ -28,7 +28,7 @@ const Home = ()=>{
     
         const fetchRent = async () => {
             try {
-                const res = await fetch('http://localhost:5000/lisiting/getBySearch?type=Rent&limit=4');
+                const res = await fetch('https://plain-jade-housecoat.cyclic.app/lisiting/getBySearch?type=Rent&limit=4');
                 const data = await res.json();
                 setRent(data)
                 fetchSell()
@@ -38,7 +38,7 @@ const Home = ()=>{
         };
         const fetchSell = async () => {
             try {
-                const res = await fetch('http://localhost:5000/lisiting/getBySearch?type=Sell&limit=4');
+                const res = await fetch('https://plain-jade-housecoat.cyclic.app/lisiting/getBySearch?type=Sell&limit=4');
                 const data = await res.json();
                 setSell(data)
             } catch (error) {

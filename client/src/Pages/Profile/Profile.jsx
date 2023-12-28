@@ -79,7 +79,7 @@ const Profile = ()=>{
   };
   const handleSubmit = async (e)=>{
     e.preventDefault()
-    let endpoint = `http://localhost:5000/users/update/${CurrentUser._id}`
+    let endpoint = `https://plain-jade-housecoat.cyclic.app/users/update/${CurrentUser._id}`
     try{
       dispatch(UpdateInStart())
       const result = await fetch(endpoint, {
@@ -105,7 +105,7 @@ const Profile = ()=>{
   }
   const handleDelete = async ()=>{
      
-        let endpoint = `http://localhost:5000/users/delete/${CurrentUser._id}`
+        let endpoint = `https://plain-jade-housecoat.cyclic.app/users/delete/${CurrentUser._id}`
         try{
           dispatch(DeleteInStart())
           const res = await fetch(endpoint, {
@@ -137,7 +137,7 @@ const handleSignout = ()=>{
       }
 }
 const handleListing = async ()=> {
-  let endpoint = `http://localhost:5000/lisiting/getListing`
+  let endpoint = `https://plain-jade-housecoat.cyclic.app/lisiting/getListing`
 
   try{
     const res = await fetch(endpoint, {
@@ -159,7 +159,7 @@ const handleListing = async ()=> {
   }
 }
 const DeleteListing = async(Lisitingid)=>{
-  let endpoint = `http://localhost:5000/lisiting/deleteListing/${Lisitingid}`
+  let endpoint = `https://plain-jade-housecoat.cyclic.app/lisiting/deleteListing/${Lisitingid}`
   try{
     const res = await fetch(endpoint, {
       method: 'DELETE',
