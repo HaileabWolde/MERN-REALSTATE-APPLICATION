@@ -42,9 +42,5 @@
   <p>
     Contributions to the Real Estate Application are welcome! If you encounter any issues or have suggestions for improvements, please open an issue or submit a pull request on the project's GitHub repository.
   </p>
-  
-  <h2>License</h2>
-  <p>
-    This project is licensed under the [License Name]. See the [LICENSE](LICENSE) file for more details.
-  </p>
+
 </div>
