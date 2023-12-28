@@ -22,7 +22,7 @@
   <h2>Screenshots</h2>
   <!-- Add screenshots of your application here -->
   <img src="./Images/Landing Page Part One.png" alt="Screenshot 1" width="500">
-  <img src="./Images/Landing Page Part Two.png" alt="Screenshot 2" width="500" style="margin-bottom: 20px">
+  <img src="./Images/Landing Page Part Two.png" alt="Screenshot 2" width="500" style="margin-bottom: 50px">
    <img src="./Images/Listing Detail Page.png" alt="Screenshot 2" width="500" style="margin-bottom: 20px">
    <img src="./Images/Search Page.png " width="500" style="margin-bottom: 20px"/>
    <img src="./Images/create listing page.png" width="500" style="margin-bottom: 20px"/>
