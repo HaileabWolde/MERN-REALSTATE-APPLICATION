@@ -2,7 +2,7 @@ import express from 'express'
 import { config } from 'dotenv'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
-import connectDB from './config/dbConnect.mjs'
+import connectDB from './config/dbConnect.js'
 import userRoute from './routes/userRoute.js'
 import listingRoute from './routes/listingRoute.js'
 config()
