@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 6000
 app.use(express.json())
 // Enable CORS
 app.use(cors({
-    origin: "https://funny-jelly-d7f5f9.netlify.app",
+    origin: "https://funny-jelly-d7f5f9.netlify.app/",
     methods: ["POST", "GET", "DELETE", "PUT"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"], // Add any other headers you need
