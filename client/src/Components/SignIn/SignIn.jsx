@@ -26,7 +26,7 @@ const SignIn = ()=>{
         e.preventDefault();
       dispatch(SignInStart())
       
-        let endpoint = signup ? 'http://localhost:5000/users/signup' : 'http://localhost:5000/users/signIn';
+        let endpoint = signup ? 'https://curious-toad-sweater.cyclic.app/users/signup' : 'https://curious-toad-sweater.cyclic.app/users/signIn';
       
         try {
           const res = await fetch(endpoint, {

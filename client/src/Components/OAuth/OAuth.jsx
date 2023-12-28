@@ -11,7 +11,7 @@ const OAuth = ()=>{
             const provider = new GoogleAuthProvider()
             const auth = getAuth(app)
             const result = await signInWithPopup(auth, provider);
-            const res = await fetch('http://localhost:5000/users/OAuth', {
+            const res = await fetch('https://curious-toad-sweater.cyclic.app/users/OAuth', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

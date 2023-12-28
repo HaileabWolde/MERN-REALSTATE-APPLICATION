@@ -120,7 +120,7 @@ const handleImageSubmit = () => {
   const handleSubmit = async (e)=>{
     e.preventDefault();
     const lisitingId = params.id
-    const endpoint = `https://plain-jade-housecoat.cyclic.app/lisiting/editListing/${lisitingId}`
+    const endpoint = `https://curious-toad-sweater.cyclic.app/lisiting/editListing/${lisitingId}`
     try{
       setLoading(true)
       const res = await fetch(endpoint, {
@@ -150,7 +150,7 @@ const handleImageSubmit = () => {
   }
   useEffect(()=>{
     const fetchListing = async()=>{
-        const endpoint = `https://plain-jade-housecoat.cyclic.app/lisiting/list/${lisitingId}`
+        const endpoint = `https://curious-toad-sweater.cyclic.app/lisiting/list/${lisitingId}`
 
         try{
             setloading(false)

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
     const [message, setMessage] = useState('')
     useEffect(()=>{
         const fetchListing = async()=>{
-            const endpoint = `http://localhost:5000/users/getUser/${UserRef}`
+            const endpoint = `https://curious-toad-sweater.cyclic.app/users/getUser/${UserRef}`
             try{
                 const res = await fetch(endpoint, {
                     method: 'GET',

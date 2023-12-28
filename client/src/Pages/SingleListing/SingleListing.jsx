@@ -25,7 +25,7 @@ const SingleListing = ()=>{
     const lisitingId = params.id
   useEffect(()=>{
     const fetchListing = async()=>{
-        const endpoint = `https://plain-jade-housecoat.cyclic.app/lisiting/list/${lisitingId}`
+        const endpoint = `https://curious-toad-sweater.cyclic.app/lisiting/list/${lisitingId}`
         try{
             setLoading(true)
             const res = await fetch(endpoint, {
