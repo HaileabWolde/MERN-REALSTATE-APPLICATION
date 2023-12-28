@@ -1,5 +1,5 @@
 <div>
- <h1 style="font-family: 'Montserrat'; font-size: 32px; font-weight: bold; color: #333; margin-bottom: 20px;>
+ <h1 style="font-family: 'Montserrat'; font-size: 32px; font-weight: bold; color: #333; margin-bottom: 20px;">
  Real Estate Application</h1>
   
 
